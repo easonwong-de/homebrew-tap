@@ -14,7 +14,7 @@ cask "aggregate-volume-menu" do
 
   depends_on macos: ">= :sequoia"
 
-  app "AggregateVolumeMenu.app"
+  app "Aggregate Device Volume.app"
 
   zap trash: [
     "~/Library/Preferences/de.easonwong.AggregateVolumeMenu.plist",
