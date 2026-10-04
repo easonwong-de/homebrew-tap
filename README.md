@@ -14,7 +14,7 @@ brew trust --tap easonwong-de/tap
 
 ## Casks
 
-### Aggregate Volume Menu
+### Aggregate Volume Menu [🔗](https://github.com/easonwong-de/Aggregate-Volume-Menu)
 
 Control the volume of macOS aggregate audio devices directly from the menu bar.
 
