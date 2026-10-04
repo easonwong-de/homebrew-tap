@@ -1,6 +1,6 @@
 cask "aggregate-volume-menu" do
-  version "1.0.0"
-  sha256 "bed8c3b51473970a99513b87d27a60108a1ffe70cae7c3c924565a4bfd82f036"
+  version "1.0.1"
+  sha256 "538684249cf0f55eb75bb71cde05672601aa5f47aef79284291114494572503e"
 
   url "https://github.com/easonwong-de/Aggregate-Volume-Menu/releases/download/v#{version}/AggregateVolumeMenu.zip"
   name "AggregateVolumeMenu"
