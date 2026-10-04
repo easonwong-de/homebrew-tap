@@ -1,29 +1,23 @@
-# Homebrew Tap
+## Getting Started
 
-Personal Homebrew tap for [Eason Wong](https://github.com/easonwong-de).
-
-## Installation
-
-Add this tap to Homebrew:
+Add the tap:
 
 ```bash
 brew tap easonwong-de/tap
 ```
 
-Install AggregateVolumeMenu:
+Trust the tap:
 
 ```bash
-brew install --cask aggregate-volume-menu
-```
-
-Or install directly:
-
-```bash
-brew install --cask easonwong-de/tap/aggregate-volume-menu
+brew trust --tap easonwong-de/tap
 ```
 
 ## Casks
 
-| Cask | Description |
-| --- | --- |
-| `aggregate-volume-menu` | Menu bar application to control aggregate audio device volume |
+### Aggregate Volume Menu
+
+Control the volume of macOS aggregate audio devices directly from the menu bar.
+
+```bash
+brew install --cask aggregate-volume-menu
+```
