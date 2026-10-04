@@ -2,11 +2,6 @@ name: Update Cask
 
 on:
     workflow_dispatch:
-        inputs:
-            version:
-                description: "Release version tag (leave blank for latest)"
-                required: false
-                default: ""
 
 concurrency:
     group: update-cask
@@ -25,13 +20,8 @@ jobs:
             - name: Fetch Release and Update Cask
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  INPUT_VERSION: ${{ inputs.version }}
               run: |
-                  TAG="${INPUT_VERSION}"
-                  if [ -z "${TAG}" ]; then
-                      TAG=$(gh release view --repo easonwong-de/Aggregate-Volume-Menu --json tagName -q .tagName)
-                  fi
-
+                  TAG=$(gh release view --repo easonwong-de/Aggregate-Volume-Menu --json tagName -q .tagName)
                   VERSION="${TAG#v}"
                   echo "Target version: ${VERSION}"
 
