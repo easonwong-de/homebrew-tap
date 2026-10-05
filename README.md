@@ -12,11 +12,21 @@ Trust the tap:
 brew trust --tap easonwong-de/tap
 ```
 
+## Formulae
+
+### anymd [🔗](https://github.com/SylphxAI/anymd)
+
+Convert any file into clean Markdown for AI agents.
+
+```bash
+brew install anymd
+```
+
 ## Casks
 
 ### Aggregate Volume Menu [🔗](https://github.com/easonwong-de/Aggregate-Volume-Menu)
 
-Control the volume of macOS aggregate audio devices directly from the menu bar.
+Changes the volume of aggregate sound devices and all.
 
 ```bash
 brew install --cask aggregate-volume-menu
