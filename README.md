@@ -31,3 +31,14 @@ Changes the volume of aggregate sound devices and all.
 ```bash
 brew install --cask aggregate-volume-menu
 ```
+
+### CzkawkaTauri [🔗](https://github.com/shixinhuang99/czkawka-tauri)
+
+Tauri-based frontend for Czkawka.
+
+```bash
+brew install --cask czkawka-tauri
+# or with bundled FFmpeg:
+brew install --cask czkawka-tauri-ffmpeg
+```
+
