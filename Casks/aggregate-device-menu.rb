@@ -1,6 +1,6 @@
 cask "aggregate-device-menu" do
-  version "1.0.1"
-  sha256 "538684249cf0f55eb75bb71cde05672601aa5f47aef79284291114494572503e"
+  version "1.0.2"
+  sha256 "d5cf7c382469ac30eebe1aaa05e62a3e27b10d0eda09613c53731387ec2703d0"
 
   url "https://github.com/easonwong-de/Aggregate-Volume-Menu/releases/download/v#{version}/AggregateDeviceVolume.zip"
   name "AggregateDeviceVolume"
