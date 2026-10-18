@@ -24,12 +24,12 @@ brew install anymd
 
 ## Casks
 
-### Aggregate Volume Menu [🔗](https://github.com/easonwong-de/Aggregate-Volume-Menu)
+### Aggregate Device Volume [🔗](https://github.com/easonwong-de/Aggregate-Volume-Menu)
 
 Changes the volume of aggregate sound devices and all.
 
 ```bash
-brew install --cask aggregate-volume-menu
+brew install --cask aggregate-device-menu
 ```
 
 ### CzkawkaTauri [🔗](https://github.com/shixinhuang99/czkawka-tauri)
