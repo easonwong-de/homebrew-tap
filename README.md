@@ -29,7 +29,7 @@ brew install anymd
 Changes the volume of aggregate sound devices and all.
 
 ```bash
-brew install --cask aggregate-device-menu
+brew install --cask aggregate-device-volume
 ```
 
 ### CzkawkaTauri [🔗](https://github.com/shixinhuang99/czkawka-tauri)

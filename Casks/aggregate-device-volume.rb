@@ -1,4 +1,4 @@
-cask "aggregate-device-menu" do
+cask "aggregate-device-volume" do
   version "1.0.2"
   sha256 "d5cf7c382469ac30eebe1aaa05e62a3e27b10d0eda09613c53731387ec2703d0"
 
