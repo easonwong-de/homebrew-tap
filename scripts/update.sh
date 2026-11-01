@@ -13,17 +13,11 @@ if [ -n "${GITHUB_ACTIONS:-}" ] && [ "$dry_run" = false ]; then
   git config user.email "github-actions[bot]@users.noreply.github.com"
 fi
 
-report_file="${REPORT_FILE:-}"
-if [ -n "$report_file" ]; then
-  mkdir -p "$(dirname "$report_file")"
-  : > "$report_file"
-fi
-
 report() {
   local msg="$1"
   echo "$msg"
-  if [ -n "$report_file" ]; then
-    echo "$msg" >> "$report_file"
+  if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+    echo "$msg" >> "$GITHUB_STEP_SUMMARY"
   fi
 }
 

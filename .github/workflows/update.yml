@@ -25,24 +25,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run update script
-        id: run_update
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPORT_FILE: update-report.txt
         run: |
           chmod +x ./scripts/update.sh
           args=()
-          mode="wet-run"
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             args+=(--dry-run)
-            mode="dry-run"
           fi
-          echo "mode=$mode" >> "$GITHUB_OUTPUT"
           ./scripts/update.sh "${args[@]}"
-
-      - name: Upload update report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: update-report-${{ steps.run_update.outputs.mode || 'wet-run' }}
-          path: update-report.txt
