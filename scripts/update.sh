@@ -13,6 +13,31 @@ if [ -n "${GITHUB_ACTIONS:-}" ] && [ "$dry_run" = false ]; then
   git config user.email "github-actions[bot]@users.noreply.github.com"
 fi
 
+report_file="${REPORT_FILE:-}"
+if [ -n "$report_file" ]; then
+  mkdir -p "$(dirname "$report_file")"
+  : > "$report_file"
+fi
+
+report() {
+  local msg="$1"
+  echo "$msg"
+  if [ -n "$report_file" ]; then
+    echo "$msg" >> "$report_file"
+  fi
+}
+
+fetch_sha() {
+  local asset="$1" url="$2" sha
+  sha=$(echo "$release_info" | jq -r --arg n "$asset" '.assets[] | select(.name == $n) | .digest' 2>/dev/null || true)
+  sha="${sha#sha256:}"
+  if [ -z "$sha" ] || [ "$sha" = "null" ]; then
+    sha=$(curl -sL "$url" | sha256sum | awk '{print $1}')
+  fi
+  echo "$sha"
+}
+
+outdated_count=0
 updated_count=0
 shopt -s nullglob
 files=(Formula/*.rb Casks/*.rb)
@@ -23,6 +48,12 @@ for file in "${files[@]}"; do
   current_ver=$(grep -E '^[[:space:]]*version[[:space:]]+"' "$file" | head -n 1 | sed -E 's/.*version[[:space:]]+"([^"]+)".*/\1/')
   [ -n "$current_ver" ] || continue
 
+  pkg_name=$(basename "$file" .rb)
+  pkg_type="cask"
+  if [[ "$file" == Formula/* ]]; then
+    pkg_type="formula"
+  fi
+
   repo=$(grep -o 'https://github.com/[^/"]\+/[^/"]\+' "$file" | head -n 1 | sed 's|https://github.com/||')
   [ -n "$repo" ] || continue
 
@@ -32,14 +63,10 @@ for file in "${files[@]}"; do
   new_ver="${tag#v}"
   [ "$new_ver" != "$current_ver" ] || continue
 
-  pkg_name=$(basename "$file" .rb)
-  pkg_type="cask"
-  if [[ "$file" == Formula/* ]]; then
-    pkg_type="formula"
-  fi
+  outdated_count=$((outdated_count + 1))
 
   if [ "$dry_run" = true ]; then
-    echo "dry-run: $pkg_type $pkg_name $current_ver -> $new_ver"
+    report "dry-run: $pkg_type $pkg_name $current_ver -> $new_ver"
     continue
   fi
 
@@ -52,12 +79,7 @@ for file in "${files[@]}"; do
     url_template=$(grep -E '^[[:space:]]*url[[:space:]]+"' "$file" | head -n 1 | sed -E 's/^[[:space:]]*url[[:space:]]+"([^"]+)".*/\1/')
     target_url="${url_template//\#\{version\}/$new_ver}"
     asset_name="${target_url##*/}"
-
-    new_sha=$(echo "$release_info" | jq -r --arg name "$asset_name" '.assets[] | select(.name == $name) | .digest' 2>/dev/null || true)
-    new_sha="${new_sha#sha256:}"
-    if [ -z "$new_sha" ] || [ "$new_sha" = "null" ]; then
-      new_sha=$(curl -sL "$target_url" | sha256sum | awk '{print $1}')
-    fi
+    new_sha=$(fetch_sha "$asset_name" "$target_url")
 
     awk -v new_ver="$new_ver" -v new_sha="$new_sha" '
       !v_done && sub(/version[[:space:]]+"[^"]+"/, "version \"" new_ver "\"") { v_done = 1 }
@@ -84,11 +106,7 @@ for file in "${files[@]}"; do
         echo "$line" >>"$final_file"
       elif [[ "$line" =~ ^([[:space:]]*)sha256[[:space:]]+\"[^\"]+\" ]] && [ -n "$pending_asset" ]; then
         indent="${BASH_REMATCH[1]}"
-        new_sha=$(echo "$release_info" | jq -r --arg name "$pending_asset" '.assets[] | select(.name == $name) | .digest' 2>/dev/null || true)
-        new_sha="${new_sha#sha256:}"
-        if [ -z "$new_sha" ] || [ "$new_sha" = "null" ]; then
-          new_sha=$(curl -sL "$pending_url" | sha256sum | awk '{print $1}')
-        fi
+        new_sha=$(fetch_sha "$pending_asset" "$pending_url")
         echo "${indent}sha256 \"$new_sha\"" >>"$final_file"
         pending_asset=""
         pending_url=""
@@ -104,9 +122,14 @@ for file in "${files[@]}"; do
   if ! git diff --quiet -- "$file"; then
     git add "$file"
     git commit -m "chore($pkg_type): update $pkg_name to $new_ver"
+    report "updated: $pkg_type $pkg_name $current_ver -> $new_ver"
     updated_count=$((updated_count + 1))
   fi
 done
+
+if [ "$outdated_count" -eq 0 ]; then
+  report "All packages are up to date."
+fi
 
 if [ "$updated_count" -gt 0 ] && [ -n "${GITHUB_ACTIONS:-}" ]; then
   git push
