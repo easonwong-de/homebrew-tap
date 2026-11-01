@@ -1,0 +1,36 @@
+name: Update Casks and Formulae
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run without committing changes"
+        type: boolean
+        default: false
+
+concurrency:
+  group: update-packages
+  cancel-in-progress: false
+
+jobs:
+  update:
+    name: Update Casks and Formulae
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run update script
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          chmod +x ./scripts/update.sh
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            ./scripts/update.sh --dry-run
+          else
+            ./scripts/update.sh
+          fi
