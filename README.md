@@ -1,17 +1,3 @@
-## Getting Started
-
-Add the tap:
-
-```bash
-brew tap easonwong-de/tap
-```
-
-Trust the tap:
-
-```bash
-brew trust --tap easonwong-de/tap
-```
-
 ## Formulae
 
 ### anymd [🔗](https://github.com/SylphxAI/anymd)
@@ -19,17 +5,17 @@ brew trust --tap easonwong-de/tap
 Convert any file into clean Markdown for AI agents.
 
 ```bash
-brew install anymd
+brew install easonwong-de/tap/anymd
 ```
 
 ## Casks
 
-### Aggregate Device Volume [🔗](https://github.com/easonwong-de/Aggregate-Volume-Menu)
+### Aggregate Device Volume [🔗](https://github.com/easonwong-de/Aggregate-Device-Volume)
 
 Changes the volume of aggregate sound devices and all.
 
 ```bash
-brew install --cask aggregate-device-volume
+brew install --cask easonwong-de/tap/aggregate-device-volume
 ```
 
 ### CzkawkaTauri [🔗](https://github.com/shixinhuang99/czkawka-tauri)
@@ -37,8 +23,7 @@ brew install --cask aggregate-device-volume
 Tauri-based frontend for Czkawka.
 
 ```bash
-brew install --cask czkawka-tauri
+brew install --cask easonwong-de/tap/czkawka-tauri
 # or with bundled FFmpeg:
-brew install --cask czkawka-tauri-ffmpeg
+brew install --cask easonwong-de/tap/czkawka-tauri-ffmpeg
 ```
-
