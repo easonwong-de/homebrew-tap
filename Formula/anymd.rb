@@ -1,7 +1,7 @@
 class Anymd < Formula
   desc "Convert any file into clean Markdown for AI agents"
   homepage "https://github.com/SylphxAI/anymd"
-  version "8.5.1"
+  version "8.5.7"
   license "MIT"
 
   livecheck do
@@ -12,22 +12,22 @@ class Anymd < Formula
   on_macos do
     on_arm do
       url "https://github.com/SylphxAI/anymd/releases/download/v#{version}/anymd-darwin-arm64.tar.gz"
-      sha256 "ad9224dcb4548c4d02b076435e83d333dc70122cb6331943c59013afba94ec29"
+      sha256 "076b75f6389685df21a9ed0de7a2efa9799aa0ee88362372604759d71a9d4e01"
     end
     on_intel do
       url "https://github.com/SylphxAI/anymd/releases/download/v#{version}/anymd-darwin-x64.tar.gz"
-      sha256 "49b638a260ab69b76946c7bfb7d61b42c631f568b4a38dc48a9bfb8ba7259661"
+      sha256 "e8b0d7002a6f2956b4cd32b749e7c0dd4249d8378b1e6cf461679dad66d52174"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/SylphxAI/anymd/releases/download/v#{version}/anymd-linux-arm64-gnu.tar.gz"
-      sha256 "6a499c59092858a1fca42d438de19c4d7c746b5dc2fc8358349f5d41217475b5"
+      sha256 "03158666dc35d22c8576e72a07acd93074bf39d698f32c7341c18fa36ea65fd1"
     end
     on_intel do
       url "https://github.com/SylphxAI/anymd/releases/download/v#{version}/anymd-linux-x64-gnu.tar.gz"
-      sha256 "0ad9288a482a0008b9ecc892e91f80906fdda2c53b66154009158fe7a79566ea"
+      sha256 "484a3328fe326a594e505ad8a08050d6ae1466a6da7d1bd557dc4bea23c517fe"
     end
   end
 
